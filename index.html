@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>REC — Rish Educational Consult</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Jost:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1a2352;
+    --navy-deep: #0e1530;
+    --navy-mid: #253070;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --cream: #f7f4ef;
+    --white: #ffffff;
+    --border: rgba(26,35,82,0.12);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Jost', sans-serif; background: var(--cream); color: var(--navy-deep); overflow-x: hidden; }
+
+  /* NAV */
+  nav { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:1.2rem 5vw; background:rgba(247,244,239,0.93); backdrop-filter:blur(14px); border-bottom:1px solid var(--border); animation:slideDown .6s ease forwards; }
+  @keyframes slideDown { from { transform:translateY(-100%); opacity:0; } to { transform:translateY(0); opacity:1; } }
+  .nav-logo { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:700; color:var(--navy); letter-spacing:.06em; text-decoration:none; }
+  .nav-logo span { color:var(--gold); }
+  .nav-links { display:flex; gap:2.4rem; list-style:none; }
+  .nav-links a { font-size:.78rem; font-weight:500; letter-spacing:.14em; text-transform:uppercase; color:var(--navy); text-decoration:none; position:relative; padding-bottom:2px; transition:color .25s; }
+  .nav-links a::after { content:''; position:absolute; bottom:0; left:0; width:0; height:1px; background:var(--gold); transition:width .3s; }
+  .nav-links a:hover { color:var(--gold); }
+  .nav-links a:hover::after { width:100%; }
+  .nav-cta { font-size:.78rem; font-weight:500; letter-spacing:.12em; text-transform:uppercase; color:var(--white); background:var(--navy); border:none; cursor:pointer; padding:.65rem 1.6rem; text-decoration:none; transition:background .25s, transform .2s; }
+  .nav-cta:hover { background:var(--gold); transform:translateY(-1px); }
+
+  /* HERO */
+  .hero { min-height:100vh; display:grid; grid-template-columns:1fr 1fr; padding-top:80px; overflow:hidden; }
+  .hero-left { display:flex; flex-direction:column; justify-content:center; padding:6vw 5vw 6vw 8vw; }
+  .hero-eyebrow { font-size:.72rem; font-weight:500; letter-spacing:.22em; text-transform:uppercase; color:var(--gold); margin-bottom:1.4rem; opacity:0; animation:fadeUp .7s .3s ease forwards; }
+  .hero-title { font-family:'Cormorant Garamond',serif; font-size:clamp(2.8rem,5vw,5rem); font-weight:700; line-height:1.06; color:var(--navy-deep); margin-bottom:1.6rem; opacity:0; animation:fadeUp .7s .5s ease forwards; }
+  .hero-title em { font-style:italic; color:var(--gold); }
+  .hero-desc { font-size:1.05rem; font-weight:300; line-height:1.75; color:#4a5070; max-width:420px; margin-bottom:2rem; opacity:0; animation:fadeUp .7s .7s ease forwards; }
+  .hero-tags { display:flex; flex-wrap:wrap; gap:.6rem; margin-bottom:2.8rem; opacity:0; animation:fadeUp .7s .85s ease forwards; }
+  .hero-tag { font-size:.72rem; font-weight:500; letter-spacing:.1em; text-transform:uppercase; color:var(--navy); background:var(--white); border:1px solid var(--border); padding:.4rem 1rem; }
+  .hero-actions { display:flex; gap:1rem; align-items:center; opacity:0; animation:fadeUp .7s .95s ease forwards; }
+
+  .btn-primary { font-size:.82rem; font-weight:500; letter-spacing:.1em; text-transform:uppercase; color:var(--white); background:var(--navy-deep); border:none; cursor:pointer; padding:1rem 2.2rem; text-decoration:none; display:inline-block; transition:background .25s, transform .2s, box-shadow .25s; }
+  .btn-primary:hover { background:var(--gold); transform:translateY(-2px); box-shadow:0 8px 24px rgba(201,168,76,.3); }
+  .btn-outline { font-size:.82rem; font-weight:500; letter-spacing:.1em; text-transform:uppercase; color:var(--navy); background:transparent; border:1.5px solid var(--navy); cursor:pointer; padding:1rem 2.2rem; text-decoration:none; display:inline-block; transition:all .25s; }
+  .btn-outline:hover { background:var(--navy); color:var(--white); }
+
+  .hero-right { background:var(--navy-deep); position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+  .hero-right::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,var(--navy-deep) 0%,var(--navy-mid) 70%); }
+  .hero-doc-stack { position:relative; z-index:2; padding:4vw; width:100%; max-width:400px; opacity:0; animation:fadeUp .9s 1s ease forwards; }
+  .hero-doc-label { font-size:.68rem; font-weight:500; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); margin-bottom:1.2rem; }
+  .doc-card { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); padding:1.8rem 2rem; margin-bottom:1.5px; display:flex; align-items:center; gap:1.4rem; transition:background .3s, transform .3s; cursor:default; }
+  .doc-card:hover { background:rgba(201,168,76,.1); transform:translateX(6px); }
+  .doc-card-icon { font-size:1.4rem; flex-shrink:0; }
+  .doc-card-name { font-family:'Cormorant Garamond',serif; font-size:1.1rem; font-weight:600; color:var(--white); margin-bottom:.2rem; }
+  .doc-card-sub { font-size:.73rem; font-weight:300; color:rgba(255,255,255,.4); letter-spacing:.08em; }
+
+  /* BANNER */
+  .polish-banner { background:var(--navy); padding:1.6rem 8vw; display:flex; align-items:center; justify-content:center; gap:4vw; flex-wrap:wrap; }
+  .polish-item { display:flex; align-items:center; gap:.7rem; }
+  .polish-dot { width:6px; height:6px; background:var(--gold); flex-shrink:0; }
+  .polish-text { font-size:.78rem; font-weight:400; letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,.65); }
+
+  /* SHARED */
+  .section-label { font-size:.72rem; font-weight:500; letter-spacing:.22em; text-transform:uppercase; color:var(--gold); margin-bottom:1rem; }
+  .section-title { font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,3.5vw,3.4rem); font-weight:600; line-height:1.1; color:var(--navy-deep); margin-bottom:1rem; }
+  .section-sub { font-size:1rem; font-weight:300; color:#6a7090; max-width:500px; line-height:1.7; margin-bottom:3.5rem; }
+  .section-divider { height:1px; background:var(--border); margin:0 8vw; }
+
+  /* WHAT WE EDIT */
+  .edit-section { padding:8rem 8vw; }
+  .edit-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:2px; }
+  .edit-card { background:var(--white); padding:2.5rem 2rem; border-bottom:3px solid transparent; text-align:center; transition:border-color .3s, transform .3s, box-shadow .3s; }
+  .edit-card:hover { border-bottom-color:var(--gold); transform:translateY(-5px); box-shadow:0 20px 50px rgba(26,35,82,.1); }
+  .edit-card-icon { font-size:2rem; margin-bottom:1.2rem; display:block; }
+  .edit-card-name { font-family:'Cormorant Garamond',serif; font-size:1.15rem; font-weight:600; color:var(--navy-deep); margin-bottom:.6rem; }
+  .edit-card-desc { font-size:.82rem; font-weight:300; color:#6a7090; line-height:1.65; }
+
+  /* FOR WHOM */
+  .for-section { background:var(--navy-deep); padding:8rem 8vw; display:grid; grid-template-columns:1fr 1fr; gap:8vw; align-items:center; }
+  .for-left .section-label { color:var(--gold-light); }
+  .for-left .section-title { color:var(--white); }
+  .for-left .section-sub { color:rgba(255,255,255,.5); }
+  .for-cards { display:grid; grid-template-columns:1fr 1fr; gap:2px; }
+  .for-card { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); padding:2.5rem 2rem; transition:background .3s; }
+  .for-card:hover { background:rgba(201,168,76,.09); }
+  .for-card-icon { font-size:1.8rem; margin-bottom:1rem; display:block; }
+  .for-card-level { font-family:'Cormorant Garamond',serif; font-size:1.25rem; font-weight:600; color:var(--white); margin-bottom:.5rem; }
+  .for-card-desc { font-size:.82rem; font-weight:300; color:rgba(255,255,255,.5); line-height:1.6; }
+
+  /* WHY */
+  .why-section { padding:8rem 8vw; }
+  .why-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; }
+  .why-card { background:var(--white); padding:3rem 2.4rem; border-left:3px solid transparent; transition:border-color .3s, box-shadow .3s; }
+  .why-card:hover { border-left-color:var(--gold); box-shadow:0 10px 40px rgba(26,35,82,.08); }
+  .why-sparkle { font-size:1.6rem; margin-bottom:1.2rem; display:block; }
+  .why-title { font-family:'Cormorant Garamond',serif; font-size:1.3rem; font-weight:600; color:var(--navy-deep); margin-bottom:.8rem; }
+  .why-text { font-size:.88rem; font-weight:300; line-height:1.7; color:#6a7090; }
+
+  /* PROCESS */
+  .process { padding:8rem 8vw; background:var(--cream); }
+  .process-row { display:grid; grid-template-columns:repeat(4,1fr); gap:2px; margin-top:4rem; }
+  .step { background:var(--white); padding:2.5rem 2rem; border-top:3px solid transparent; transition:border-color .3s, box-shadow .3s; }
+  .step:hover { border-top-color:var(--gold); box-shadow:0 12px 40px rgba(26,35,82,.08); }
+  .step-num { font-family:'Cormorant Garamond',serif; font-size:3.5rem; font-weight:700; color:rgba(26,35,82,.07); line-height:1; margin-bottom:1rem; }
+  .step-title { font-family:'Cormorant Garamond',serif; font-size:1.2rem; font-weight:600; color:var(--navy-deep); margin-bottom:.6rem; }
+  .step-text { font-size:.85rem; font-weight:300; line-height:1.65; color:#6a7090; }
+
+  /* CONTACT */
+  .contact { background:var(--white); padding:8rem 8vw; display:grid; grid-template-columns:1fr 1fr; gap:8vw; align-items:start; }
+  .contact-info .section-sub { margin-bottom:3rem; }
+  .contact-item { display:flex; gap:1.2rem; align-items:flex-start; margin-bottom:2rem; padding-bottom:2rem; border-bottom:1px solid var(--border); }
+  .contact-item:last-child { border-bottom:none; }
+  .contact-icon { width:46px; height:46px; flex-shrink:0; background:var(--navy); display:flex; align-items:center; justify-content:center; }
+  .contact-icon svg { width:20px; height:20px; color:white; }
+  .contact-type { font-size:.7rem; font-weight:500; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); margin-bottom:.3rem; }
+  .contact-value { font-size:1rem; font-weight:400; color:var(--navy-deep); text-decoration:none; display:block; }
+  .contact-value:hover { color:var(--gold); }
+  .contact-form { background:var(--cream); padding:3rem; border-top:4px solid var(--navy); }
+  .form-title { font-family:'Cormorant Garamond',serif; font-size:1.8rem; font-weight:600; color:var(--navy-deep); margin-bottom:2rem; }
+  .form-group { margin-bottom:1.4rem; }
+  .form-group label { display:block; font-size:.72rem; font-weight:500; letter-spacing:.12em; text-transform:uppercase; color:var(--navy); margin-bottom:.5rem; }
+  .form-group input, .form-group select, .form-group textarea { width:100%; padding:.85rem 1rem; font-family:'Jost',sans-serif; font-size:.9rem; font-weight:300; color:var(--navy-deep); background:var(--white); border:1.5px solid var(--border); outline:none; transition:border-color .25s; resize:none; }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color:var(--navy); }
+  .form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+
+  /* FOOTER */
+  footer { background:var(--navy-deep); padding:3rem 8vw; display:flex; align-items:center; justify-content:space-between; }
+  .footer-logo { font-family:'Cormorant Garamond',serif; font-size:1.3rem; font-weight:700; color:var(--white); }
+  .footer-logo span { color:var(--gold); }
+  .footer-copy { font-size:.75rem; font-weight:300; color:rgba(255,255,255,.35); }
+  .footer-tagline { font-size:.75rem; font-weight:300; color:rgba(255,255,255,.35); font-style:italic; }
+
+  @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+  .reveal { opacity:0; transform:translateY(28px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+
+  @media (max-width:1000px) {
+    .hero { grid-template-columns:1fr; }
+    .hero-right { min-height:380px; }
+    .hero-left { padding:5rem 6vw 3rem; }
+    .edit-grid { grid-template-columns:1fr 1fr; }
+    .for-section { grid-template-columns:1fr; }
+    .for-cards { margin-top:3rem; }
+    .why-grid { grid-template-columns:1fr; }
+    .process-row { grid-template-columns:1fr 1fr; }
+    .contact { grid-template-columns:1fr; }
+    footer { flex-direction:column; gap:1rem; text-align:center; }
+    .nav-links { display:none; }
+  }
+  @media (max-width:600px) {
+    .edit-grid, .for-cards, .process-row { grid-template-columns:1fr; }
+    .form-row { grid-template-columns:1fr; }
+    .polish-banner { flex-direction:column; gap:1rem; align-items:flex-start; padding:1.4rem 6vw; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">R<span>EC</span></a>
+  <ul class="nav-links">
+    <li><a href="#edit">What We Edit</a></li>
+    <li><a href="#for">Who We Serve</a></li>
+    <li><a href="#why">Why REC</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Get Started</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow">Rish Educational Consult</p>
+    <h1 class="hero-title">
+      We Polish Your<br>Path to <em>Success</em>
+    </h1>
+    <p class="hero-desc">Expert editing and writing of academic application documents — crafted to be clear, concise, and compelling to admissions committees worldwide.</p>
+    <div class="hero-tags">
+      <span class="hero-tag">SOP</span>
+      <span class="hero-tag">Cover Letter</span>
+      <span class="hero-tag">Scholarship Letter</span>
+      <span class="hero-tag">Motivation Letter</span>
+      <span class="hero-tag">Letter of Interest</span>
+    </div>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Get Your Document Edited</a>
+      <a href="#edit" class="btn-outline">Learn More</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-doc-stack">
+      <p class="hero-doc-label">Documents We Handle</p>
+      <div class="doc-card">
+        <span class="doc-card-icon">📄</span>
+        <div><div class="doc-card-name">Statement of Purpose</div><div class="doc-card-sub">SOP · Personal Statement</div></div>
+      </div>
+      <div class="doc-card">
+        <span class="doc-card-icon">✉️</span>
+        <div><div class="doc-card-name">Cover Letter</div><div class="doc-card-sub">Application · Academic · Job</div></div>
+      </div>
+      <div class="doc-card">
+        <span class="doc-card-icon">🏅</span>
+        <div><div class="doc-card-name">Scholarship Letter</div><div class="doc-card-sub">Fellowship · Grant · Funding</div></div>
+      </div>
+      <div class="doc-card">
+        <span class="doc-card-icon">🎯</span>
+        <div><div class="doc-card-name">Motivation Letter</div><div class="doc-card-sub">Masters · PhD · Exchange</div></div>
+      </div>
+      <div class="doc-card">
+        <span class="doc-card-icon">📝</span>
+        <div><div class="doc-card-name">Letter of Interest</div><div class="doc-card-sub">Research · Programme · Faculty</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BANNER -->
+<div class="polish-banner">
+  <div class="polish-item"><span class="polish-dot"></span><span class="polish-text">Fine-tuned & polished content</span></div>
+  <div class="polish-item"><span class="polish-dot"></span><span class="polish-text">Clear, concise & impactful writing</span></div>
+  <div class="polish-item"><span class="polish-dot"></span><span class="polish-text">Increase your chances of acceptance</span></div>
+  <div class="polish-item"><span class="polish-dot"></span><span class="polish-text">WhatsApp support available</span></div>
+</div>
+
+<!-- WHAT WE EDIT -->
+<section class="edit-section" id="edit">
+  <p class="section-label reveal">What We Edit</p>
+  <h2 class="section-title reveal">Every Document<br>Your Application Needs</h2>
+  <p class="section-sub reveal">We review, rewrite, and refine your application materials so every word earns its place on the page.</p>
+  <div class="edit-grid">
+    <div class="edit-card reveal">
+      <span class="edit-card-icon">📄</span>
+      <div class="edit-card-name">Statement of Purpose</div>
+      <p class="edit-card-desc">Tell your story with clarity and conviction. We shape your SOP to reflect your voice and impress admissions panels.</p>
+    </div>
+    <div class="edit-card reveal">
+      <span class="edit-card-icon">✉️</span>
+      <div class="edit-card-name">Cover Letters</div>
+      <p class="edit-card-desc">Concise, professional, and targeted. We craft letters that open doors at universities and scholarship bodies.</p>
+    </div>
+    <div class="edit-card reveal">
+      <span class="edit-card-icon">🏅</span>
+      <div class="edit-card-name">Scholarship Letters</div>
+      <p class="edit-card-desc">Make funding bodies take notice. We align your narrative with what selection committees are looking for.</p>
+    </div>
+    <div class="edit-card reveal">
+      <span class="edit-card-icon">🎯</span>
+      <div class="edit-card-name">Motivation Letters</div>
+      <p class="edit-card-desc">Why you, why this programme, why now. We help you answer those questions powerfully and persuasively.</p>
+    </div>
+    <div class="edit-card reveal">
+      <span class="edit-card-icon">📝</span>
+      <div class="edit-card-name">Letters of Interest</div>
+      <p class="edit-card-desc">From research proposals to faculty outreach — expressed with genuine intent and precision.</p>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- FOR WHOM -->
+<section class="for-section" id="for">
+  <div class="for-left">
+    <p class="section-label reveal">Who We Serve</p>
+    <h2 class="section-title reveal" style="color:var(--white)">For Every Level<br>of Application</h2>
+    <p class="section-sub reveal">Whether you are applying for your first degree or a prestigious fellowship, we have the expertise to position you competitively.</p>
+    <a href="#contact" class="btn-primary reveal">Start Your Application</a>
+  </div>
+  <div class="for-cards reveal">
+    <div class="for-card">
+      <span class="for-card-icon">🎓</span>
+      <div class="for-card-level">Bachelor's Applications</div>
+      <p class="for-card-desc">Undergraduate personal statements and cover letters that stand out in competitive admissions pools.</p>
+    </div>
+    <div class="for-card">
+      <span class="for-card-icon">📚</span>
+      <div class="for-card-level">Master's Applications</div>
+      <p class="for-card-desc">SOP and motivation letters tailored to postgraduate requirements and university expectations.</p>
+    </div>
+    <div class="for-card">
+      <span class="for-card-icon">🔬</span>
+      <div class="for-card-level">PhD Applications</div>
+      <p class="for-card-desc">Research statements and letters of intent that communicate scholarly readiness and academic vision.</p>
+    </div>
+    <div class="for-card">
+      <span class="for-card-icon">🌟</span>
+      <div class="for-card-level">Scholarships & Fellowships</div>
+      <p class="for-card-desc">Competitive scholarship letters crafted to meet the high bar of merit-based funding bodies.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE US -->
+<section class="why-section" id="why">
+  <p class="section-label reveal">Why Choose REC</p>
+  <h2 class="section-title reveal">Writing That Works<br>for Your Future</h2>
+  <p class="section-sub reveal">Three reasons our clients get accepted where others don't.</p>
+  <div class="why-grid">
+    <div class="why-card reveal">
+      <span class="why-sparkle">✨</span>
+      <div class="why-title">Fine-Tuned & Polished Content</div>
+      <p class="why-text">We don't just proofread. We restructure, refine, and elevate your writing until every sentence serves a purpose. Your document will be sharper, cleaner, and far more persuasive.</p>
+    </div>
+    <div class="why-card reveal">
+      <span class="why-sparkle">✨</span>
+      <div class="why-title">Clear, Concise & Impactful Writing</div>
+      <p class="why-text">Admissions readers see thousands of documents. Ours get read. We eliminate filler, tighten your argument, and ensure your strongest points land with maximum impact.</p>
+    </div>
+    <div class="why-card reveal">
+      <span class="why-sparkle">✨</span>
+      <div class="why-title">Increase Your Chances of Acceptance</div>
+      <p class="why-text">A well-written document is the difference between shortlisted and rejected. We give you the edge with editorial expertise, international admissions insight, and genuine care for your outcome.</p>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- PROCESS -->
+<section class="process" id="process">
+  <p class="section-label reveal">How It Works</p>
+  <h2 class="section-title reveal">From Draft to Accepted<br>in Four Steps</h2>
+  <div class="process-row">
+    <div class="step reveal">
+      <div class="step-num">01</div>
+      <div class="step-title">Send Your Draft</div>
+      <p class="step-text">Share your existing draft or raw notes via WhatsApp or email. No perfect starting point needed — we work with what you have.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">02</div>
+      <div class="step-title">Consultation</div>
+      <p class="step-text">We discuss your target institution, programme goals, and specific requirements so the document is perfectly tailored.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">03</div>
+      <div class="step-title">Edit & Polish</div>
+      <p class="step-text">Our editors refine your content for structure, clarity, tone, and impact — returning a fully polished document.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">04</div>
+      <div class="step-title">Final Review</div>
+      <p class="step-text">You review, we revise. We stand by our work until you are satisfied and ready to submit with confidence.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-info">
+    <p class="section-label reveal">Get in Touch</p>
+    <h2 class="section-title reveal">Ready to Polish<br>Your Application?</h2>
+    <p class="section-sub reveal">Reach out on WhatsApp for a fast response. Our consultants are ready to review your documents and get you started.</p>
+    <div class="contact-item reveal">
+      <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg></div>
+      <div><div class="contact-type">WhatsApp</div><a href="https://wa.me/380638711610" class="contact-value">+380 638 711 610</a></div>
+    </div>
+    <div class="contact-item reveal">
+      <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg></div>
+      <div><div class="contact-type">Mobile</div><a href="tel:+2349166915286" class="contact-value">+234 916 691 5286</a></div>
+    </div>
+    <div class="contact-item reveal">
+      <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div>
+      <div><div class="contact-type">Email</div><a href="mailto:orishfortune@yahoo.com" class="contact-value">orishfortune@yahoo.com</a></div>
+    </div>
+  </div>
+
+  <div class="contact-form reveal">
+    <div class="form-title">Request an Edit</div>
+    <div class="form-row">
+      <div class="form-group"><label>First Name</label><input type="text" placeholder="John"></div>
+      <div class="form-group"><label>Last Name</label><input type="text" placeholder="Doe"></div>
+    </div>
+    <div class="form-group"><label>Email Address</label><input type="email" placeholder="john@example.com"></div>
+    <div class="form-group">
+      <label>Document Type</label>
+      <select>
+        <option value="">Select document...</option>
+        <option>Statement of Purpose (SOP)</option>
+        <option>Cover Letter</option>
+        <option>Scholarship Letter</option>
+        <option>Motivation Letter</option>
+        <option>Letter of Interest</option>
+        <option>Other</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Application Level</label>
+      <select>
+        <option value="">Select level...</option>
+        <option>Bachelor's Application</option>
+        <option>Master's Application</option>
+        <option>PhD Application</option>
+        <option>Scholarship / Fellowship</option>
+      </select>
+    </div>
+    <div class="form-group"><label>Additional Notes</label><textarea rows="3" placeholder="Target university, deadline, anything we should know..."></textarea></div>
+    <a href="https://wa.me/380638711610" class="btn-primary" style="width:100%;display:block;text-align:center;padding:1.1rem;font-size:.85rem;margin-bottom:.8rem;">Chat on WhatsApp →</a>
+    <button class="btn-outline" style="width:100%;padding:1.1rem;font-size:.85rem;cursor:pointer;">Submit Form</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">R<span>EC</span></div>
+  <div class="footer-copy">&copy; 2025 Rish Educational Consult. All rights reserved.</div>
+  <div class="footer-tagline">We polish your path to success</div>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  document.querySelectorAll('.edit-card,.for-card,.why-card,.step').forEach((el,i) => {
+    el.style.transitionDelay = (i * 0.07) + 's';
+  });
+</script>
+</body>
+</html>
