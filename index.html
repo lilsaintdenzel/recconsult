@@ -49,15 +49,15 @@
   .btn-outline { font-size:.82rem; font-weight:500; letter-spacing:.1em; text-transform:uppercase; color:var(--navy); background:transparent; border:1.5px solid var(--navy); cursor:pointer; padding:1rem 2.2rem; text-decoration:none; display:inline-block; transition:all .25s; }
   .btn-outline:hover { background:var(--navy); color:var(--white); }
 
-  .hero-right { background:var(--navy-deep); position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+  .hero-right { background:var(--navy-deep); position:relative; overflow:hidden; display:flex; align-items:stretch; justify-content:center; }
   .hero-right::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,var(--navy-deep) 0%,var(--navy-mid) 70%); }
-  .hero-doc-stack { position:relative; z-index:2; padding:4vw; width:100%; max-width:400px; opacity:0; animation:fadeUp .9s 1s ease forwards; }
-  .hero-doc-label { font-size:.68rem; font-weight:500; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); margin-bottom:1.2rem; }
-  .doc-card { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); padding:1.8rem 2rem; margin-bottom:1.5px; display:flex; align-items:center; gap:1.4rem; transition:background .3s, transform .3s; cursor:default; }
+  .hero-doc-stack { position:relative; z-index:2; padding:2.5vw 3vw; width:100%; display:flex; flex-direction:column; justify-content:center; opacity:0; animation:fadeUp .9s 1s ease forwards; }
+  .hero-doc-label { font-size:.68rem; font-weight:500; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); margin-bottom:.8rem; }
+  .doc-card { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); padding:1rem 1.4rem; margin-bottom:1.5px; display:flex; align-items:center; gap:1.2rem; transition:background .3s, transform .3s; cursor:default; flex:1; }
   .doc-card:hover { background:rgba(201,168,76,.1); transform:translateX(6px); }
-  .doc-card-icon { font-size:1.4rem; flex-shrink:0; }
-  .doc-card-name { font-family:'Cormorant Garamond',serif; font-size:1.1rem; font-weight:600; color:var(--white); margin-bottom:.2rem; }
-  .doc-card-sub { font-size:.73rem; font-weight:300; color:rgba(255,255,255,.4); letter-spacing:.08em; }
+  .doc-card-icon { font-size:1.3rem; flex-shrink:0; }
+  .doc-card-name { font-family:'Cormorant Garamond',serif; font-size:1rem; font-weight:600; color:var(--white); margin-bottom:.15rem; }
+  .doc-card-sub { font-size:.7rem; font-weight:300; color:rgba(255,255,255,.4); letter-spacing:.08em; }
 
   /* BANNER */
   .polish-banner { background:var(--navy); padding:1.6rem 8vw; display:flex; align-items:center; justify-content:center; gap:4vw; flex-wrap:wrap; }
